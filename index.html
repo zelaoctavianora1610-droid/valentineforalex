@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You, My Love 💝</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Quicksand:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; }
+    * { box-sizing: border-box; }
+    
+    :root {
+      --maroon: #8B2942;
+      --soft-pink: #F4D1D7;
+      --cream: #FFF8F0;
+      --rose-gold: #B76E79;
+      --deep-rose: #A85566;
+    }
+    
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--cream);
+      overflow-x: hidden;
+    }
+    
+    .font-display { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, var(--cream) 0%, var(--soft-pink) 50%, var(--cream) 100%);
+    }
+    
+    .heart-float {
+      animation: floatHeart 3s ease-in-out infinite;
+    }
+    
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(139, 41, 66, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(139, 41, 66, 0.6); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .animate-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
+    .animate-fade-in-delay-1 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+    .animate-fade-in-delay-2 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+    .animate-fade-in-delay-3 { animation: fadeInUp 0.8s ease-out 0.6s forwards; opacity: 0; }
+    
+    .gift-box {
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .gift-box:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+    
+    .gift-box.opening {
+      animation: pulse-glow 1s ease-in-out;
+    }
+    
+    .section-hidden { 
+      opacity: 0; 
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+    
+    .section-visible { 
+      opacity: 1; 
+      transform: translateY(0);
+    }
+    
+    .memory-card {
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    
+    .memory-card:hover {
+      transform: translateY(-8px) rotate(1deg);
+      box-shadow: 0 20px 40px rgba(139, 41, 66, 0.2);
+    }
+    
+    .love-note {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .love-note::before {
+      content: '💕';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 4rem;
+      opacity: 0.1;
+    }
+    
+    .timeline-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-dot:hover {
+      transform: scale(1.5);
+      box-shadow: 0 0 20px var(--maroon);
+    }
+    
+    .secret-btn {
+      background: linear-gradient(135deg, var(--maroon), var(--rose-gold));
+      transition: all 0.3s ease;
+    }
+    
+    .secret-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(139, 41, 66, 0.4);
+    }
+    
+    .sparkle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--rose-gold);
+      border-radius: 50%;
+      animation: sparkle 1s ease-out forwards;
+    }
+    
+    .scroll-indicator {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+      40% { transform: translateY(-15px) translateX(-50%); }
+      60% { transform: translateY(-7px) translateX(-50%); }
+    }
+    
+    .envelope {
+      perspective: 1000px;
+    }
+    
+    .envelope-flap {
+      transform-origin: top;
+      transition: transform 0.6s ease;
+    }
+    
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+    }
+    
+    .letter-content {
+      transition: all 0.6s ease 0.3s;
+      transform: translateY(100%);
+    }
+    
+    .envelope.open .letter-content {
+      transform: translateY(-20px);
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100%) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="w-full min-h-full overflow-auto gradient-bg"><!-- Sparkle Container -->
+   <div class="sparkle-container" id="sparkles"></div><!-- Opening Screen -->
+   <section id="opening" class="min-h-full flex flex-col items-center justify-center p-6 relative">
+    <div class="text-center max-w-lg"><!-- Floating Hearts Background -->
+     <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-10 left-10 text-4xl heart-float" style="animation-delay: 0s;">
+       💕
+      </div>
+      <div class="absolute top-20 right-16 text-3xl heart-float" style="animation-delay: 0.5s;">
+       💗
+      </div>
+      <div class="absolute bottom-32 left-20 text-2xl heart-float" style="animation-delay: 1s;">
+       💖
+      </div>
+      <div class="absolute bottom-20 right-10 text-4xl heart-float" style="animation-delay: 1.5s;">
+       💝
+      </div>
+     </div><!-- Main Content -->
+     <p class="text-sm uppercase tracking-widest mb-4 animate-fade-in" style="color: var(--rose-gold);">A Special Gift For</p>
+     <h1 id="partner-name-display" class="font-display text-5xl md:text-6xl mb-6 animate-fade-in-delay-1" style="color: var(--maroon);">My Dearest Love</h1>
+     <p id="opening-message-display" class="text-lg mb-10 leading-relaxed animate-fade-in-delay-2" style="color: var(--deep-rose);">Behind this gift box is a tiny world I've created just for you. No one else can see it. It's our secret garden of memories, feelings, and all the little things that make my heart skip when I think of you...</p><!-- Gift Box -->
+     <div id="gift-box" class="gift-box inline-block animate-fade-in-delay-3" onclick="openGift()">
+      <svg width="120" height="120" viewbox="0 0 120 120" class="mx-auto"><!-- Box Base --> <rect x="15" y="50" width="90" height="60" rx="5" fill="#8B2942" /> <rect x="20" y="55" width="80" height="50" rx="3" fill="#A85566" /> <!-- Ribbon Vertical --> <rect x="52" y="50" width="16" height="60" fill="#F4D1D7" /> <rect x="54" y="52" width="12" height="56" fill="#FFE4E8" /> <!-- Box Lid --> <rect x="10" y="35" width="100" height="20" rx="5" fill="#8B2942" id="box-lid" /> <!-- Ribbon Horizontal --> <rect x="10" y="40" width="100" height="12" fill="#F4D1D7" /> <rect x="12" y="42" width="96" height="8" fill="#FFE4E8" /> <!-- Bow --> <ellipse cx="60" cy="35" rx="20" ry="12" fill="#F4D1D7" /> <ellipse cx="42" cy="30" rx="15" ry="10" fill="#FFE4E8" transform="rotate(-20 42 30)" /> <ellipse cx="78" cy="30" rx="15" ry="10" fill="#FFE4E8" transform="rotate(20 78 30)" /> <circle cx="60" cy="35" r="8" fill="#B76E79" /> <circle cx="60" cy="35" r="5" fill="#8B2942" />
+      </svg>
+      <p class="mt-4 text-sm font-medium" style="color: var(--maroon);">✨ Tap to open your gift ✨</p>
+     </div>
+    </div><!-- Scroll Indicator (hidden initially) -->
+    <div id="scroll-indicator" class="absolute bottom-8 left-1/2 scroll-indicator opacity-0 transition-opacity duration-500">
+     <svg width="30" height="50" viewbox="0 0 30 50" fill="none"><rect x="1" y="1" width="28" height="48" rx="14" stroke="#8B2942" stroke-width="2" /> <circle cx="15" cy="15" r="5" fill="#8B2942">
+       <animate attributename="cy" values="15;30;15" dur="1.5s" repeatcount="indefinite" />
+      </circle>
+     </svg>
+     <p class="text-xs mt-2" style="color: var(--maroon);">Scroll down</p>
+    </div>
+   </section><!-- Main Content (Hidden until gift is opened) -->
+   <div id="main-content" class="hidden"><!-- Love Story Timeline -->
+    <section id="love-story" class="py-20 px-6 section-hidden" style="background: linear-gradient(180deg, var(--cream) 0%, var(--soft-pink) 100%);">
+     <div class="max-w-4xl mx-auto">
+      <h2 id="love-story-title-display" class="font-display text-4xl text-center mb-4" style="color: var(--maroon);">Our Beautiful Journey</h2>
+      <p class="text-center mb-16" style="color: var(--deep-rose);">From strangers to soulmates... here's how we got here 💕</p><!-- Timeline -->
+      <div class="relative"><!-- Timeline Line -->
+       <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full rounded-full" style="background: linear-gradient(180deg, var(--maroon), var(--rose-gold));"></div><!-- Timeline Items -->
+       <div class="space-y-16"><!-- Chapter 1 -->
+        <div class="flex items-center">
+         <div class="w-1/2 pr-8 text-right">
+          <div class="love-note p-6 rounded-2xl shadow-lg" style="background: white;"><span class="text-3xl">✨</span>
+           <h3 class="font-display text-xl mt-2 mb-2" style="color: var(--maroon);">The Beginning</h3>
+           <p class="text-sm leading-relaxed" style="color: var(--deep-rose);">Remember that day? I was trying so hard to play it cool, but my heart was doing backflips. You probably didn't notice how nervous I was... or maybe you did and that's why you smiled like that.</p>
+          </div>
+         </div>
+         <div class="timeline-dot w-6 h-6 rounded-full z-10 cursor-pointer" style="background: var(--maroon);"></div>
+         <div class="w-1/2 pl-8"><span class="text-sm font-medium" style="color: var(--rose-gold);">Chapter 1</span>
+         </div>
+        </div><!-- Chapter 2 -->
+        <div class="flex items-center">
+         <div class="w-1/2 pr-8 text-right"><span class="text-sm font-medium" style="color: var(--rose-gold);">Chapter 2</span>
+         </div>
+         <div class="timeline-dot w-6 h-6 rounded-full z-10 cursor-pointer" style="background: var(--rose-gold);"></div>
+         <div class="w-1/2 pl-8">
+          <div class="love-note p-6 rounded-2xl shadow-lg" style="background: white;"><span class="text-3xl">🌙</span>
+           <h3 class="font-display text-xl mt-2 mb-2" style="color: var(--maroon);">Late Night Talks</h3>
+           <p class="text-sm leading-relaxed" style="color: var(--deep-rose);">Those 3 AM conversations where we'd say "okay, we should end the call" but then keep talking for another hour. when i woke up in the morning you still kee call on i feel something coming between us.</p>
+          </div>
+         </div>
+        </div><!-- Chapter 3 -->
+        <div class="flex items-center">
+         <div class="w-1/2 pr-8 text-right">
+          <div class="love-note p-6 rounded-2xl shadow-lg" style="background: white;"><span class="text-3xl">💫</span>
+           <h3 class="font-display text-xl mt-2 mb-2" style="color: var(--maroon);">The Moment I Knew</h3>
+           <p class="text-sm leading-relaxed" style="color: var(--deep-rose);">It wasn't some grand romantic moment. You were just laughing at something silly, and I thought, "Oh. This is it. This is the person I want to annoy for the rest of my life."</p>
+          </div>
+         </div>
+         <div class="timeline-dot w-6 h-6 rounded-full z-10 cursor-pointer" style="background: var(--maroon);"></div>
+         <div class="w-1/2 pl-8"><span class="text-sm font-medium" style="color: var(--rose-gold);">Chapter 3</span>
+         </div>
+        </div><!-- Chapter 4 -->
+        <div class="flex items-center">
+         <div class="w-1/2 pr-8 text-right"><span class="text-sm font-medium" style="color: var(--rose-gold);">Chapter 4</span>
+         </div>
+         <div class="timeline-dot w-6 h-6 rounded-full z-10 cursor-pointer" style="background: var(--rose-gold);"></div>
+         <div class="w-1/2 pl-8">
+          <div class="love-note p-6 rounded-2xl shadow-lg" style="background: white;"><span class="text-3xl">🏠</span>
+           <h3 class="font-display text-xl mt-2 mb-2" style="color: var(--maroon);">Finding Home</h3>
+           <p class="text-sm leading-relaxed" style="color: var(--deep-rose);">Somewhere along the way, "home" stopped being a place and became a person. Now, wherever you are is where I belong. Even if it's just sitting in silence together.</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Little Moments Gallery -->
+    <section id="moments" class="py-20 px-6 section-hidden" style="background: var(--cream);">
+     <div class="max-w-5xl mx-auto">
+      <h2 class="font-display text-4xl text-center mb-4" style="color: var(--maroon);">The Little Things I Treasure</h2>
+      <p class="text-center mb-12" style="color: var(--deep-rose);">Small moments that feel like the biggest gifts 🎁</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         ☕
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Morning tea </h3>
+        <p class="text-sm" style="color: var(--deep-rose);">The way you look when you're still half-asleep, holding your cup like it's the only thing keeping you alive. Adorable and relatable.</p>
+       </div>
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         😂
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Inside feel Nobody Gets</h3>
+        <p class="text-sm" style="color: var(--deep-rose);">When you trying to ask me should we end the call and i always ask you back the way you say no and smile and suddenly kisses me with small laugh i feel like i want play that time.</p>
+       </div>
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         🎵
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Random music</h3>
+        <p class="text-sm" style="color: var(--deep-rose);">when i realized we have some music type i feel like found someone i really need for a long time who have some taste on music and the ay you make our playlist on spotify tbh that time im blush no one ever do that for me .</p>
+       </div>
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         🌧️
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Rainy Day </h3>
+        <p class="text-sm" style="color: var(--deep-rose);">every rainy day coming i feel like missing you badly and want you to be here with me hehe.</p>
+       </div>
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         🍕
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Food preparing</h3>
+        <p class="text-sm" style="color: var(--deep-rose);">"What should i eat strawbbery or cherry yougurt?" - that time i know my decision is important for you bcs you want show me that how i meant for you with simple things .</p>
+       </div>
+       <div class="memory-card p-6 rounded-2xl shadow-md" style="background: white;">
+        <div class="text-4xl mb-4">
+         💤
+        </div>
+        <h3 class="font-display text-lg mb-2" style="color: var(--maroon);">Sleepy "I Love You"s</h3>
+        <p class="text-sm" style="color: var(--deep-rose);">Those mumbled words right before you drift off. Half-conscious but still making sure I know. Gets me every time.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Things I Secretly Love -->
+    <section id="secrets" class="py-20 px-6 section-hidden" style="background: linear-gradient(180deg, var(--soft-pink) 0%, var(--cream) 100%);">
+     <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl text-center mb-4" style="color: var(--maroon);">Things I Secretly Adore About You</h2>
+      <p class="text-center mb-12" style="color: var(--deep-rose);">(Okay, not so secret anymore... but still true) 🤫</p>
+      <div class="space-y-6">
+       <div class="flex items-start gap-4 p-5 rounded-xl" style="background: rgba(255,255,255,0.7);"><span class="text-2xl">👀</span>
+        <div>
+         <h4 class="font-medium mb-1" style="color: var(--maroon);">The way you scrunch your nose</h4>
+         <p class="text-sm" style="color: var(--deep-rose);">When you're concentrating or when something tastes weird. You don't even know you do it.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-5 rounded-xl" style="background: rgba(255,255,255,0.7);"><span class="text-2xl">💬</span>
+        <div>
+         <h4 class="font-medium mb-1" style="color: var(--maroon);">Your random fun facts</h4>
+         <p class="text-sm" style="color: var(--deep-rose);">You'll be mid-conversation and suddenly share something totally unrelated. I love your brain.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-5 rounded-xl" style="background: rgba(255,255,255,0.7);"><span class="text-2xl">🫂</span>
+        <div>
+         <h4 class="font-medium mb-1" style="color: var(--maroon);">How you hug even virtual</h4>
+         <p class="text-sm" style="color: var(--deep-rose);">Like you actually mean it. Like you're trying to squeeze all the love directly into me. Works every time.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-5 rounded-xl" style="background: rgba(255,255,255,0.7);"><span class="text-2xl">😤</span>
+        <div>
+         <h4 class="font-medium mb-1" style="color: var(--maroon);">Your passionate rants</h4>
+         <p class="text-sm" style="color: var(--deep-rose);">About things that matter to you. I could listen to you talk about your interests forever. Your passion is contagious.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-5 rounded-xl" style="background: rgba(255,255,255,0.7);"><span class="text-2xl">🌟</span>
+        <div>
+         <h4 class="font-medium mb-1" style="color: var(--maroon);">Your kindness when you think no one's watching</h4>
+         <p class="text-sm" style="color: var(--deep-rose);">The small things you do for others without making a big deal about it. I see you. It's beautiful.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Love Letter Section -->
+    <section id="letter" class="py-20 px-6 section-hidden" style="background: var(--cream);">
+     <div class="max-w-2xl mx-auto text-center">
+      <h2 class="font-display text-4xl mb-8" style="color: var(--maroon);">A Letter From My Heart</h2><!-- Envelope -->
+      <div class="envelope mx-auto mb-8 cursor-pointer" style="width: 280px; height: 200px;" onclick="toggleEnvelope(this)">
+       <div class="relative w-full h-full"><!-- Envelope Body -->
+        <div class="absolute inset-0 rounded-lg shadow-lg" style="background: #F4D1D7;"><!-- Envelope Inner -->
+         <div class="absolute inset-2 rounded" style="background: linear-gradient(135deg, #FFE4E8, #F4D1D7);"></div>
+        </div><!-- Letter Inside -->
+        <div class="letter-content absolute inset-4 p-4 rounded shadow-md" style="background: white;">
+         <p class="text-xs text-left leading-relaxed" style="color: var(--deep-rose);">Dear love,<br><br>
+           I'm not great with words, but you make me want to try. Every day with you feels like unwrapping a gift I didn't know I needed...<br><br><span class="italic">Click the secret button below for more 💕</span></p>
+        </div><!-- Envelope Flap -->
+        <div class="envelope-flap absolute top-0 left-0 w-full" style="height: 50%;">
+         <svg viewbox="0 0 280 100" class="w-full h-full"><path d="M0,100 L0,20 Q0,0 20,0 L260,0 Q280,0 280,20 L280,100 L140,50 Z" fill="#E8B4BE" /> <path d="M5,95 L140,50 L275,95" stroke="#8B2942" stroke-width="1" fill="none" opacity="0.3" />
+         </svg>
+        </div><!-- Heart Seal -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center shadow-lg" style="background: var(--maroon);"><span class="text-white text-xl">💌</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <p class="text-sm" style="color: var(--rose-gold);">↑ Click the envelope to read ↑</p>
+     </div>
+    </section><!-- Secret Section Trigger -->
+    <section id="secret-trigger" class="py-16 px-6 section-hidden" style="background: linear-gradient(180deg, var(--cream), var(--soft-pink));">
+     <div class="max-w-xl mx-auto text-center">
+      <p class="mb-6" style="color: var(--deep-rose);">You've made it this far... which means there's something special waiting for you.</p><button onclick="revealSecret()" class="secret-btn text-white px-8 py-4 rounded-full font-medium shadow-lg"> 🔓 Unlock Your Secret Surprise </button>
+      <p class="text-xs mt-4 opacity-70" style="color: var(--maroon);">(Go ahead, you know you want to...)</p>
+     </div>
+    </section><!-- Hidden Secret Section -->
+    <section id="secret-section" class="py-20 px-6 hidden" style="background: linear-gradient(135deg, var(--maroon), #5C1A2D);">
+     <div class="max-w-3xl mx-auto text-center">
+      <div class="mb-8"><span class="text-6xl">💝</span>
+      </div>
+      <h2 class="font-display text-4xl mb-6 text-white">The Words I Hold Closest</h2>
+      <div class="p-8 rounded-2xl mb-10" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+       <p id="final-message-display" class="text-lg leading-relaxed mb-6" style="color: var(--soft-pink);">"You came into my life like a plot twist I never saw coming. And now I can't imagine the story without you. Thank you for choosing me, for staying, for being exactly who you are. I don't just love you—I like you, I admire you, I'm grateful for you. Every single day. <br><br>
+         Here's to us—to all our tomorrows, our dreams, our silly arguments about nothing, our adventures, and our quiet moments. I'm so ready for all of it. <br><br>
+         Forever yours, with all my heart."</p>
+       <p id="your-name-display" class="font-display text-2xl text-white">— With all my love ❤️</p>
+      </div><!-- Future Dreams -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+       <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.1);"><span class="text-2xl">🌅</span>
+        <p class="text-sm mt-2" style="color: var(--soft-pink);">More sunrises together</p>
+       </div>
+       <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.1);"><span class="text-2xl">🗺️</span>
+        <p class="text-sm mt-2" style="color: var(--soft-pink);">Adventures waiting for us</p>
+       </div>
+       <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.1);"><span class="text-2xl">👴👵</span>
+        <p class="text-sm mt-2" style="color: var(--soft-pink);">Growing old &amp; silly together</p>
+       </div>
+      </div>
+      <p class="text-sm opacity-70" style="color: var(--soft-pink);">Happy Valentine's Day, my love 💕</p>
+     </div>
+    </section><!-- Footer -->
+    <footer class="py-10 px-6 text-center" style="background: var(--cream);">
+     <p class="text-sm mb-2" style="color: var(--rose-gold);">Made with 💝 just for you</p>
+     <p class="font-display text-lg" style="color: var(--maroon);">Happy Valentine's Day 2026</p>
+     <div class="mt-4"><span class="text-2xl heart-float inline-block">💕</span>
+     </div>
+    </footer>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      partner_name: "My Dearest Love",
+      your_name: "With all my love ❤️",
+      opening_message: "Behind this gift box is a tiny world I've created just for you. No one else can see it. It's our secret garden of memories, feelings, and all the little things that make my heart skip when I think of you...",
+      love_story_title: "Our Beautiful Journey",
+      final_message: "You came into my life like a plot twist I never saw coming. And now I can't imagine the story without you. Thank you for choosing me, for staying, for being exactly who you are. I don't just love you—I like you, I admire you, I'm grateful for you. Every single day.\n\nHere's to us—to all our tomorrows, our dreams, our silly arguments about nothing, our adventures, and our quiet moments. I'm so ready for all of it.\n\nForever yours, with all my heart.",
+      background_color: "#FFF8F0",
+      primary_color: "#8B2942",
+      text_color: "#A85566",
+      accent_color: "#F4D1D7",
+      secondary_color: "#B76E79"
+    };
+    
+    let giftOpened = false;
+    
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          // Update partner name
+          const partnerNameEl = document.getElementById('partner-name-display');
+          if (partnerNameEl) {
+            partnerNameEl.textContent = config.partner_name || defaultConfig.partner_name;
+            partnerNameEl.style.color = config.primary_color || defaultConfig.primary_color;
+          }
+          
+          // Update your name
+          const yourNameEl = document.getElementById('your-name-display');
+          if (yourNameEl) {
+            yourNameEl.textContent = `— ${config.your_name || defaultConfig.your_name}`;
+          }
+          
+          // Update opening message
+          const openingMsgEl = document.getElementById('opening-message-display');
+          if (openingMsgEl) {
+            openingMsgEl.textContent = config.opening_message || defaultConfig.opening_message;
+            openingMsgEl.style.color = config.text_color || defaultConfig.text_color;
+          }
+          
+          // Update love story title
+          const loveStoryTitleEl = document.getElementById('love-story-title-display');
+          if (loveStoryTitleEl) {
+            loveStoryTitleEl.textContent = config.love_story_title || defaultConfig.love_story_title;
+            loveStoryTitleEl.style.color = config.primary_color || defaultConfig.primary_color;
+          }
+          
+          // Update final message
+          const finalMsgEl = document.getElementById('final-message-display');
+          if (finalMsgEl) {
+            finalMsgEl.innerHTML = (config.final_message || defaultConfig.final_message).replace(/\n/g, '<br>');
+            finalMsgEl.style.color = config.accent_color || defaultConfig.accent_color;
+          }
+          
+          // Update background
+          const appWrapper = document.getElementById('app-wrapper');
+          if (appWrapper) {
+            const bgColor = config.background_color || defaultConfig.background_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            appWrapper.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${accentColor} 50%, ${bgColor} 100%)`;
+          }
+          
+          // Update CSS custom properties
+          document.documentElement.style.setProperty('--maroon', config.primary_color || defaultConfig.primary_color);
+          document.documentElement.style.setProperty('--soft-pink', config.accent_color || defaultConfig.accent_color);
+          document.documentElement.style.setProperty('--cream', config.background_color || defaultConfig.background_color);
+          document.documentElement.style.setProperty('--rose-gold', config.secondary_color || defaultConfig.secondary_color);
+          document.documentElement.style.setProperty('--deep-rose', config.text_color || defaultConfig.text_color);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["partner_name", config.partner_name || defaultConfig.partner_name],
+          ["your_name", config.your_name || defaultConfig.your_name],
+          ["opening_message", config.opening_message || defaultConfig.opening_message],
+          ["love_story_title", config.love_story_title || defaultConfig.love_story_title],
+          ["final_message", config.final_message || defaultConfig.final_message]
+        ])
+      });
+    }
+    
+    // Open gift animation
+    function openGift() {
+      if (giftOpened) return;
+      giftOpened = true;
+      
+      const giftBox = document.getElementById('gift-box');
+      giftBox.classList.add('opening');
+      
+      // Create confetti
+      createConfetti();
+      
+      // Animate gift box
+      setTimeout(() => {
+        giftBox.style.transform = 'scale(0.8) translateY(-20px)';
+        giftBox.style.opacity = '0.5';
+      }, 500);
+      
+      setTimeout(() => {
+        giftBox.style.display = 'none';
+        
+        // Show scroll indicator
+        const scrollIndicator = document.getElementById('scroll-indicator');
+        scrollIndicator.style.opacity = '1';
+        
+        // Reveal main content
+        const mainContent = document.getElementById('main-content');
+        mainContent.classList.remove('hidden');
+        
+        // Setup scroll observer
+        setupScrollObserver();
+        
+      }, 1000);
+    }
+    
+    // Create confetti effect
+    function createConfetti() {
+      const colors = ['#8B2942', '#F4D1D7', '#B76E79', '#FFE4E8', '#A85566'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '50%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+        confetti.style.height = (Math.random() * 10 + 5) + 'px';
+        confetti.style.animation = `confetti-fall ${Math.random() * 2 + 1}s ease-out forwards`;
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+    
+    // Setup intersection observer for scroll animations
+    function setupScrollObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-visible');
+            entry.target.classList.remove('section-hidden');
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.section-hidden').forEach(section => {
+        observer.observe(section);
+      });
+    }
+    
+    // Toggle envelope
+    function toggleEnvelope(envelope) {
+      envelope.classList.toggle('open');
+      createSparkles(envelope);
+    }
+    
+    // Create sparkles effect
+    function createSparkles(element) {
+      const rect = element.getBoundingClientRect();
+      const sparklesContainer = document.getElementById('sparkles');
+      
+      for (let i = 0; i < 10; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100 + 'px';
+        sparkle.style.top = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100 + 'px';
+        sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+        
+        sparklesContainer.appendChild(sparkle);
+        
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+    
+    // Reveal secret section
+    function revealSecret() {
+      const secretSection = document.getElementById('secret-section');
+      const secretTrigger = document.getElementById('secret-trigger');
+      
+      secretTrigger.style.display = 'none';
+      secretSection.classList.remove('hidden');
+      
+      // Create celebration effect
+      createConfetti();
+      
+      // Smooth scroll to secret section
+      setTimeout(() => {
+        secretSection.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+    
+    // Add click sparkles on memory cards
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.memory-card') || e.target.closest('.timeline-dot')) {
+        const sparklesContainer = document.getElementById('sparkles');
+        
+        for (let i = 0; i < 5; i++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = e.clientX + (Math.random() - 0.5) * 50 + 'px';
+          sparkle.style.top = e.clientY + (Math.random() - 0.5) * 50 + 'px';
+          sparkle.style.animationDelay = Math.random() * 0.3 + 's';
+          
+          sparklesContainer.appendChild(sparkle);
+          
+          setTimeout(() => sparkle.remove(), 1000);
+        }
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd9c0c612e4f8d0',t:'MTc3MTA0MjYxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
